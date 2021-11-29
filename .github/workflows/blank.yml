@@ -29,9 +29,22 @@ jobs:
         # You may pin to the exact commit or the version.
         # uses: tj-actions/changed-files@8dfe0ee3f4840f84a7947b5288b19d7a583755ae
         uses: tj-actions/changed-files@v11.7
+        id: changed-files
         
       - name: List all modified files
         run: |
           for file in ${{ steps.changed-files.outputs.all_modified_files }}; do
             echo "$file was modified"
           done
+
+      - name: Files changed in one
+        id: changed-files-one
+        uses: tj-actions/changed-files@v11.7
+        with:
+          files: |
+            one\/
+
+      - name: Run step if any of the listed files above change
+        if: steps.changed-files-one.outputs.any_changed == 'true'
+        run: |
+          echo "One or more files listed above has changed."
