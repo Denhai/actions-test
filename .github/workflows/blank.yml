@@ -44,7 +44,7 @@ jobs:
         uses: tj-actions/changed-files@v11.7
         with:
           files: |
-            one-folder\/
+            one-folder/
 
       - name: Run step if any of the listed files above change
         if: steps.changed-files-one.outputs.any_changed == 'true'
