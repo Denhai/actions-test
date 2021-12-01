@@ -79,7 +79,9 @@ jobs:
       - test-js
     if: | 
       always() &&
-      needs.test-py.result == 'success' &&
-      needs.test-js.result == 'success'
+      !contains(needs.test-js.result, 'failure') &&
+      !contains(needs.test-js.result, 'cancelled') &&
+      !contains(needs.test-py.result, 'failure') &&
+      !contains(needs.test-py.result, 'cancelled')
     steps:
       - run: echo ${{ github.job }}
