@@ -70,6 +70,8 @@ jobs:
       - test-py
       - test-js
     if: | 
-      !failure() && !cancelled()
+      always() &&
+      needs.test-py.result == 'success' &&
+      needs.test-js.result == 'success'
     steps:
       - run: echo ${{ github.job }}
