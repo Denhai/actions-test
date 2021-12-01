@@ -37,7 +37,7 @@ jobs:
       - lint-js
       - lint-py
     if: |
-      !failure() && !cancelled()
+      !failure() && !cancelled() &&
       !contains(needs.*.result, 'failure') &&
       !contains(needs.*.result, 'cancelled')
     steps:
