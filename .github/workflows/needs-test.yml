@@ -42,7 +42,9 @@ jobs:
       - lint-js
       - lint-py
     if: |
-      (contains(needs.lint-js.result, 'success') || contains(needs.lint-py.result, 'success'))
+      !contains(needs.*.result, 'failure') &&
+      !contains(needs.*.result, 'cancelled') &&
+      (needs.lint-js.result == 'success' || needs.lint-py.result == 'success')
       
     steps:
       - run: echo ${{ github.job }}
