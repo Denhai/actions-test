@@ -82,6 +82,7 @@ jobs:
       !contains(needs.test-js.result, 'failure') &&
       !contains(needs.test-js.result, 'cancelled') &&
       !contains(needs.test-py.result, 'failure') &&
-      !contains(needs.test-py.result, 'cancelled')
+      !contains(needs.test-py.result, 'cancelled') &&
+      (needs.changed-files.outputs.backend_any_changed == 'true' || needs.changed-files.outputs.frontend_any_changed == 'true')
     steps:
       - run: echo ${{ github.job }}
