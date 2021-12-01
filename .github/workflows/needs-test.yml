@@ -57,7 +57,7 @@ jobs:
       - lints-complete
       - changed-files
     if: | 
-      !failure() && !cancelled() && ${{ needs.changed-files.outputs.backend_any_changed == 'true' }}
+      !failure() && !cancelled() && needs.changed-files.outputs.backend_any_changed == 'true'
     steps:
       - run: echo ${{ github.job }}
 
@@ -67,6 +67,6 @@ jobs:
       - lints-complete
       - changed-files
     if: | 
-      !failure() && !cancelled() && ${{ needs.changed-files.outputs.frontend_any_changed == 'true' }}
+      !failure() && !cancelled() && needs.changed-files.outputs.frontend_any_changed == 'true'
     steps:
       - run: echo ${{ github.job }}
