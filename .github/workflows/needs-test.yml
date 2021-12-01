@@ -19,7 +19,7 @@ jobs:
       - id: changed-files
         run: |
           echo "::set-output name=frontend_any_changed::true"
-          echo "::set-output name=backend_any_changed::true"
+          echo "::set-output name=backend_any_changed::false"
 
   lint-js:
     runs-on: ubuntu-latest
