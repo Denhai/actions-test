@@ -51,7 +51,7 @@ jobs:
       always() &&
       !contains(needs.*.result, 'failure') &&
       !contains(needs.*.result, 'cancelled') &&
-      (contains(needs.lint-js.result, 'success') || contains(needs.lint-py.result, 'success'))
+      (success('lint-js') || success('lint-py'))
       
     steps:
       - run: echo ${{ github.job }}
@@ -63,7 +63,7 @@ jobs:
       - changed-files
     if: | 
       always() &&
-      needs.lints-complete.result == 'success' &&
+      success('lints-complete') &&
       needs.changed-files.outputs.backend_any_changed == 'true'
     steps:
       - run: echo ${{ github.job }}
@@ -75,7 +75,7 @@ jobs:
       - changed-files
     if: | 
       always() &&
-      needs.lints-complete.result == 'success' &&
+      success('lints-complete') &&
       needs.changed-files.outputs.frontend_any_changed == 'true'
     steps:
       - run: echo ${{ github.job }}
