@@ -91,6 +91,7 @@ jobs:
       always() &&
       !contains(needs.test-js.result, 'failure') &&
       !contains(needs.test-js.result, 'cancelled') &&
+      success('test-js') &&
       !contains(needs.test-py.result, 'failure') &&
       !contains(needs.test-py.result, 'cancelled') &&
       (needs.changed-files.outputs.backend_any_changed == 'true' || needs.changed-files.outputs.frontend_any_changed == 'true')
