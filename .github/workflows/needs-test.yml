@@ -79,6 +79,7 @@ jobs:
       needs.changed-files.outputs.frontend_any_changed == 'true'
     steps:
       - run: echo ${{ github.job }}
+      - run: exit 1
 
   e2e:
     runs-on: ubuntu-latest
