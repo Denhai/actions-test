@@ -40,6 +40,7 @@ jobs:
       - changed-files
     steps:
       - run: echo ${{ github.job }}
+      - run: exit 1
     if: ${{ needs.changed-files.outputs.backend_any_changed == 'true' }}
 
   lints-complete:
