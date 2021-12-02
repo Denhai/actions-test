@@ -33,6 +33,7 @@ jobs:
       - changed-files
     steps:
       - run: echo ${{ github.job }}
+      - run: exit 1
     if: ${{ needs.changed-files.outputs.frontend_any_changed == 'true' }}
   lint-py:
     runs-on: ubuntu-latest
