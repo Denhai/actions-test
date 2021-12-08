@@ -50,9 +50,9 @@ jobs:
       - lint-py
       - changed-files
     if: | 
-      always() &&
-      !failure('lint-js') && !cancelled('lint-js') &&
-      !failure('lint-py') && !cancelled('lint-py') &&
+      always() && !cancelled() &&
+      !failure('lint-js') &&
+      !failure('lint-py') &&
       (success('lint-js') || success('lint-py')) &&
       needs.changed-files.outputs.backend_any_changed == 'true'
     steps:
@@ -65,9 +65,9 @@ jobs:
       - lint-py
       - changed-files
     if: | 
-      always() &&
-      !failure('lint-js') && !cancelled('lint-js') &&
-      !failure('lint-py') && !cancelled('lint-py') &&
+      always() && !cancelled() &&
+      !failure('lint-js') &&
+      !failure('lint-py') &&
       (success('lint-js') || success('lint-py')) &&
       needs.changed-files.outputs.frontend_any_changed == 'true'
     steps:
