@@ -1,4 +1,4 @@
-name: Needs test
+name: Skip
 
 on:
   push:
