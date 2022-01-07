@@ -2,9 +2,16 @@ name: Needs test
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    types:
+      - opened
+      - reopened
+      - synchronize
+      # https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows#pull_request
+      # opened, synchronize, or reopened are the defaults.
+      - ready_for_review
+    branches: [master]
 
   workflow_dispatch:
 
@@ -16,6 +23,7 @@ concurrency:
 
 jobs:
   changed-files:
+    if: ${{ !github.event.pull_request.draft }}
     runs-on: ubuntu-latest
     outputs:
       frontend_any_changed: ${{ steps.changed-files.outputs.frontend_any_changed }}
@@ -33,7 +41,7 @@ jobs:
       - changed-files
     steps:
       - run: echo ${{ github.job }}
-    if: ${{ needs.changed-files.outputs.frontend_any_changed == 'true' }}
+    if: ${{ !github.event.pull_request.draft && needs.changed-files.outputs.frontend_any_changed == 'true' }}
 
   lint-py:
     runs-on: ubuntu-latest
@@ -41,7 +49,7 @@ jobs:
       - changed-files
     steps:
       - run: echo ${{ github.job }}
-    if: ${{ needs.changed-files.outputs.backend_any_changed == 'true' }}
+    if: ${{ !github.event.pull_request.draft && needs.changed-files.outputs.backend_any_changed == 'true' }}
 
   test-py:
     runs-on: ubuntu-latest
@@ -49,7 +57,8 @@ jobs:
       - lint-js
       - lint-py
       - changed-files
-    if: | 
+    if: |
+      !github.event.pull_request.draft &&
       !failure('lint-js') &&
       !failure('lint-py') &&
       (success('lint-js') || success('lint-py')) &&
@@ -63,7 +72,8 @@ jobs:
       - lint-js
       - lint-py
       - changed-files
-    if: | 
+    if: |
+      !github.event.pull_request.draft &&
       !failure('lint-js') &&
       !failure('lint-py') &&
       (success('lint-js') || success('lint-py')) &&
@@ -78,7 +88,8 @@ jobs:
       - test-py
       - test-js
       - changed-files
-    if: | 
+    if: |
+      !github.event.pull_request.draft &&
       !failure('test-js') &&
       !failure('test-py') &&
       (needs.changed-files.outputs.backend_any_changed == 'true' || needs.changed-files.outputs.frontend_any_changed == 'true')
