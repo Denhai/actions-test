@@ -11,7 +11,7 @@ on:
       # https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows#pull_request
       # opened, synchronize, or reopened are the defaults.
       - ready_for_review
-    branches: [master]
+    branches: [main]
 
   workflow_dispatch:
 
