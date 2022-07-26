@@ -88,9 +88,6 @@ jobs:
       - test-js
       - changed-files
     if: |
-      !github.event.pull_request.draft &&
-      !failure('test-js') &&
-      !failure('test-py') && 
-      (success('test-js') || success('test-py'))
+      !github.event.pull_request.draft
     steps:
       - run: echo ${{ github.event.workflow_run.conclusion }} test
