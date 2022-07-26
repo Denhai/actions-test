@@ -91,3 +91,14 @@ jobs:
       !github.event.pull_request.draft
     steps:
       - run: echo ${{ github.event.workflow_run.conclusion }} test
+
+  all-jobs-complete:
+    runs-on: ubuntu-latest
+    needs:
+      - e2e
+    if: |
+      !github.event.pull_request.draft && 
+      !cancelled()
+    steps:
+      - run: |
+          echo ${{ github.event.workflow_run.conclusion }} test
