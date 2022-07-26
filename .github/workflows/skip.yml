@@ -88,9 +88,11 @@ jobs:
       - test-js
       - changed-files
     if: |
-      !github.event.pull_request.draft
+      !github.event.pull_request.draft &&
+      !failure('test-js') &&
+      !failure('test-py')
     steps:
-      - run: echo ${{ github.event.workflow_run.conclusion }} test
+      - run: echo ${{ github.job }}
 
   all-jobs-complete:
     runs-on: ubuntu-latest
@@ -101,4 +103,4 @@ jobs:
       !cancelled()
     steps:
       - run: |
-          echo ${{ github.event.workflow_run.conclusion }} test
+          echo ${{ needs.e2e.result }}
