@@ -93,4 +93,4 @@ jobs:
       !failure('test-py') && 
       (success('test-js') || success('test-py'))
     steps:
-      - run: echo ${{ github.job }}
+      - run: echo ${{ github.event.workflow_run.conclusion }}
