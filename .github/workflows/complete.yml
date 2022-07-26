@@ -1,8 +1,8 @@
-name: complete
+name: Complete
 
 on:
   workflow_run:
-    workflows: ["Skip"]
+    workflows: [Skip]
     types:
       - completed
 
