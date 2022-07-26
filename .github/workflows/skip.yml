@@ -100,9 +100,8 @@ jobs:
       - e2e
     if: |
       !github.event.pull_request.draft && 
-      !cancelled() &&
-      !failure('e2e') &&
-      !failure()
+      !cancelled()
     steps:
       - run: |
           echo "This job does nothing"
+          echo ${{ needs.e2e.result }}
