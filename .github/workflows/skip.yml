@@ -90,7 +90,8 @@ jobs:
     if: |
       !github.event.pull_request.draft &&
       !failure('test-js') &&
-      !failure('test-py')
+      !failure('test-py') &&
+      (success('test-js') || success('test-py'))
     steps:
       - run: echo ${{ github.job }}
 
