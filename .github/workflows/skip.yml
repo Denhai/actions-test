@@ -108,10 +108,14 @@ jobs:
       !cancelled()
     steps:
       - run: |
-          exit ${{
+          passed=${{
             (needs.e2e.result == 'success' || needs.e2e.result == 'skipped') &&
             (needs.test-js.result == 'success' || needs.test-js.result == 'skipped') &&
             (needs.test-py.result == 'success' || needs.test-py.result == 'skipped') &&
             (needs.lint-py.result == 'success' || needs.lint-py.result == 'skipped') &&
             (needs.lint-js.result == 'success' || needs.lint-js.result == 'skipped')
           }}
+      - run: |
+          if [ passed = 'false' ];
+            exit 1
+          fi
