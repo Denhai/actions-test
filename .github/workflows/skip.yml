@@ -116,6 +116,6 @@ jobs:
             (needs.lint-js.result == 'success' || needs.lint-js.result == 'skipped')
           }}
       - run: |
-          if [ passed = 'false' ];
-            exit 1
-          fi
+          if [ "$passed" = "false" ]; then
+            exit 1;
+          fi;
