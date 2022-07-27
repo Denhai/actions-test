@@ -49,7 +49,7 @@ jobs:
       - changed-files
     steps:
       - run: echo ${{ github.job }}
-      - run: exit 1
+      # - run: exit 1
     if: ${{ !github.event.pull_request.draft }}
 
   test-py:
