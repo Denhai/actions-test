@@ -115,6 +115,4 @@ jobs:
             (needs.lint-py.result == 'success' || needs.lint-py.result == 'skipped') &&
             (needs.lint-js.result == 'success' || needs.lint-js.result == 'skipped')
           }}
-          if [ "$passed" = "false" ]; then
-            exit 1;
-          fi;
+          [ "$passed" = "true" ]
