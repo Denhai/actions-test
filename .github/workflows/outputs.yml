@@ -44,4 +44,4 @@ jobs:
     steps:
       - run: |
           echo '${{needs.job1.outputs.json}}'
-          echo '${{needs.job1.outputs.json}}' | jq '.tags'
+          echo ${{needs.job1.outputs.json}} | jq ".tags"
