@@ -1,0 +1,41 @@
+name: Outputs test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+concurrency:
+  # A single workflow at a time per PR
+  group: needs-${{ github.ref }}
+  # When new changes are pushed, other workflows on the PR are cancelled.
+  cancel-in-progress: true
+
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker metadata
+        id: docker-metadata
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            denhai/job1
+          tags: |
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=tag
+            type=ref,event=pr
+            type=sha
+
+  job2:
+    runs-on: ubuntu-latest
+    needs:
+      - job1
+    steps:
+      - run: |
+          echo ${{needs.job1.outputs}}
