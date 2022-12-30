@@ -18,11 +18,11 @@ concurrency:
 jobs:
   job1:
     outputs:
-      tags: ${{ steps.docker-metadata.tags }}
+      tags: ${{ steps.step2.tags }}
     runs-on: ubuntu-latest
     steps:
       - name: Docker metadata
-        id: docker-metadata
+        id: step1
         uses: docker/metadata-action@v4
         with:
           images: |
@@ -33,7 +33,9 @@ jobs:
             type=ref,event=tag
             type=ref,event=pr
             type=sha
-
+      - id: step2
+        run: |
+          echo tags=${{steps.step1.tags}} >> $GITHUB_OUTPUT
   job2:
     runs-on: ubuntu-latest
     needs:
