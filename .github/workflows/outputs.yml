@@ -17,6 +17,8 @@ concurrency:
 
 jobs:
   job1:
+    outputs:
+      tags: ${{ steps.docker-metadata.tags }}
     runs-on: ubuntu-latest
     steps:
       - name: Docker metadata
@@ -38,4 +40,4 @@ jobs:
       - job1
     steps:
       - run: |
-          echo ${{needs.job1.outputs}}
+          echo ${{needs.job1.outputs.tags}}
