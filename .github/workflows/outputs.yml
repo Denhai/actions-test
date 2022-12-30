@@ -18,7 +18,8 @@ concurrency:
 jobs:
   job1:
     outputs:
-      tags: ${{ steps.step2.tags }}
+      json: ${{ steps.step2.outputs.json }}
+      json1: ${{ steps.step1.outputs.json }}
     runs-on: ubuntu-latest
     steps:
       - name: Docker metadata
@@ -35,11 +36,12 @@ jobs:
             type=sha
       - id: step2
         run: |
-          echo "tags=${{steps.step1.outputs.tags}}" >> $GITHUB_OUTPUT
+          echo "json=${{steps.step1.outputs.json}}" >> $GITHUB_OUTPUT
   job2:
     runs-on: ubuntu-latest
     needs:
       - job1
     steps:
       - run: |
-          echo ${{needs.job1.outputs.tags}}
+          echo ${{needs.job1.outputs.json}}
+          echo ${{needs.job1.outputs.json}} | jq
