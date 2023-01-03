@@ -39,7 +39,7 @@ jobs:
         run: |
           echo 'json=${{steps.step1.outputs.json}}' >> $GITHUB_OUTPUT
 
-      - uses: actions/github-script@v5
+      - uses: actions/github-script@v6
         id: set-output
         with:
           script: |
