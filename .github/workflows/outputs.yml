@@ -20,7 +20,7 @@ jobs:
     outputs:
       json: ${{ steps.step2.outputs.json }}
       more-json: ${{ steps.step1.outputs.json }}
-      tag: ${{ steps.step1.outputs.tags[-1] }}
+      tag: ${{ steps.set-output.outputs.tag }}
     runs-on: ubuntu-latest
     steps:
       - name: Docker metadata
@@ -39,11 +39,13 @@ jobs:
         run: |
           echo 'json=${{steps.step1.outputs.json}}' >> $GITHUB_OUTPUT
 
-      # - uses: actions/github-script@v5
-      #   id: set-output
-      #   with:
-      #     script: |
-      #       core.setOutput("tags", `${{ env.context }}`);   
+      - uses: actions/github-script@v5
+        id: set-output
+        with:
+          script: |
+            const tags = ${{steps.step1.outputs.tags}}
+            console.log(tags);
+            core.setOutput("tag", tags[-1]);   
   job2:
     runs-on: ubuntu-latest
     needs:
