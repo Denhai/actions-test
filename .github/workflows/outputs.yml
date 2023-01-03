@@ -45,7 +45,7 @@ jobs:
           script: |
             const tags = `${{steps.step1.outputs.tags}}`;
             console.log(tags);
-            const tag = tags.split('\n')[-1];
+            const tag = tags.split('\n').at(-1);
             core.setOutput("tag", tag);   
   job2:
     runs-on: ubuntu-latest
