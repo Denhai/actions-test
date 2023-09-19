@@ -25,8 +25,8 @@ jobs:
   changed-files:
     runs-on: ubuntu-latest
     outputs:
-      frontend_any_changed: ${{ steps.changed-files.outputs.frontend_any_changed == 'true' || inputs.frontend }}
-      backend_any_changed: ${{ steps.changed-files.outputs.backend_any_changed == 'true' || inputs.backend }}
+      frontend_any_changed: ${{ steps.changed-files.outputs.frontend_any_changed == 'true' || (inputs.frontend || false) }}
+      backend_any_changed: ${{ steps.changed-files.outputs.backend_any_changed == 'true' || (inputs.backend || false) }}
     steps:
       - run: echo ${{ github.job }}
       - id: changed-files
