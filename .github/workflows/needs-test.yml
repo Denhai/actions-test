@@ -31,8 +31,8 @@ jobs:
       - run: echo ${{ github.job }}
       - id: changed-files
         run: |
-          echo "::set-output name=frontend_any_changed::true"
-          echo "::set-output name=backend_any_changed::false"
+          echo "frontend_any_changed=false" >> $GITHUB_OUTPUT
+          echo "backend_any_changed=false" >> $GITHUB_OUTPUT
 
   lint-js:
     runs-on: ubuntu-latest
